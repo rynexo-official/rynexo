@@ -1,0 +1,145 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Registered user profile information in RYNEXO",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "country": { "type": "string" },
+        "city": { "type": "string" },
+        "phone": { "type": "string" },
+        "profession": { "type": "string" },
+        "experienceLevel": { "type": "string" },
+        "monthlyGoalUSD": { "type": "number" },
+        "availableBudgetUSD": { "type": "number" },
+        "weeklyHours": { "type": "number" },
+        "language": { "type": "string" },
+        "subscriptionTier": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "SavedJob": {
+      "title": "Saved Job",
+      "description": "Saved job positions for a candidate stored in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "savedAt": { "type": "string" }
+      },
+      "required": ["userId", "jobId"]
+    },
+    "AIReadinessReport": {
+      "title": "AI Readiness Report",
+      "description": "AI Success Plan and profile readiness assessment report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "overallScore": { "type": "number" },
+        "statusLabel": { "type": "string" },
+        "summary": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "savedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "overallScore"]
+    },
+    "BusinessIdea": {
+      "title": "Business Idea",
+      "description": "Saved business idea and incubator execution model",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "businessName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "category": { "type": "string" },
+        "savedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "businessName"]
+    },
+    "DailySuccessProgress": {
+      "title": "Daily Success Progress",
+      "description": "Sync of user daily missions, streaks, income goals, and achievements",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "currentStreak": { "type": "number" },
+        "bestStreak": { "type": "number" },
+        "daysCompletedCount": { "type": "number" },
+        "weeklyCompletedDays": { "type": "number" },
+        "monthlyCompletedDays": { "type": "number" },
+        "monthlyGoalIncomeUSD": { "type": "number" },
+        "currentMonthlyIncomeUSD": { "type": "number" },
+        "dailyMotivationText": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "AffiliateOffer": {
+      "title": "Affiliate Offer",
+      "description": "Custom affiliate offers created by admins or users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "affiliateLink": { "type": "string" },
+        "addedAt": { "type": "string" }
+      },
+      "required": ["id", "title"]
+    },
+    "AIMemory": {
+      "title": "AI Memory",
+      "description": "Permanent AI Agent Memory tracking candidate profile, skills, activity, saved jobs, rejected jobs, applications, decision engine, daily workflow, and evolution",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "country": { "type": "string" },
+        "city": { "type": "string" },
+        "skills": { "type": "array" },
+        "experience": { "type": "string" },
+        "careerScore": { "type": "number" },
+        "lastActiveTime": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles collection"
+    },
+    "/saved_jobs/{jobId}": {
+      "schema": { "$ref": "#/entities/SavedJob" },
+      "description": "User saved job opportunities collection"
+    },
+    "/ai_readiness_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/AIReadinessReport" },
+      "description": "User AI readiness and success plan reports"
+    },
+    "/saved_business_ideas/{ideaId}": {
+      "schema": { "$ref": "#/entities/BusinessIdea" },
+      "description": "User saved business ideas and roadmaps"
+    },
+    "/user_daily_success/{userId}": {
+      "schema": { "$ref": "#/entities/DailySuccessProgress" },
+      "description": "User daily success, streaks, and progress metrics"
+    },
+    "/affiliates/{affiliateId}": {
+      "schema": { "$ref": "#/entities/AffiliateOffer" },
+      "description": "Custom affiliate offers marketplace"
+    },
+    "/ai_memory/{userId}": {
+      "schema": { "$ref": "#/entities/AIMemory" },
+      "description": "Permanent AI Memory document per candidate tracking Decision Engine and Daily Workflow"
+    }
+  }
+}

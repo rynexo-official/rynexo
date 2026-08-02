@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions for authentication & ownership
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && resource != null && resource.data.userId == request.auth.uid;
+    }
+
+    function isNewDocOwner() {
+      return isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // User profiles collection - strictly owned by matching UID
+    match /users/{userId} {
+      allow read, write, create, update, delete: if isOwner(userId);
+    }
+
+    // Subscriptions collection - strictly owned by matching UID
+    match /subscriptions/{userId} {
+      allow read, write, create, update, delete: if isOwner(userId);
+    }
+
+    // Payment transactions collection - strictly owned by user
+    match /payment_transactions/{txId} {
+      allow read: if isDocOwner();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+
+    // Saved jobs collection - strictly owned by user
+    match /saved_jobs/{jobId} {
+      allow read: if isDocOwner();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+
+    // AI readiness reports and success plans
+    match /ai_readiness_reports/{reportId} {
+      allow read: if isDocOwner();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+
+    // Saved business ideas collection
+    match /saved_business_ideas/{ideaId} {
+      allow read: if isDocOwner();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+
+    // Daily success dashboard progress & streaks
+    match /user_daily_success/{userId} {
+      allow read, write, create, update, delete: if isOwner(userId);
+    }
+
+    // Custom affiliate marketplace offers collection
+    match /affiliates/{affiliateId} {
+      allow read: if isAuthenticated();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+
+    // AI Memory document collection
+    match /ai_memory/{userId} {
+      allow read, write, create, update, delete: if isOwner(userId);
+    }
+
+    // Email notifications collection
+    match /email_notifications/{notifId} {
+      allow read: if isDocOwner();
+      allow create: if isNewDocOwner();
+      allow update, delete: if isDocOwner();
+    }
+  }
+}
+
