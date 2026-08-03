@@ -21,7 +21,7 @@
     "motion": "^12.23.24",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "recharts": "^3.10.1",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
@@ -32,3 +32,4 @@
     "typescript": "~5.8.2",
     "@types/express": "^4.17.21"
   }
+}
