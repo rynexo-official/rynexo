@@ -1,0 +1,6 @@
+{
+  "name": "RYNEXO",
+  "description": "AI-powered career and online business platform offering job recommendations, online business strategies, affiliate marketplace, AI coaching, learning center, and multi-language support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
